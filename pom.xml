@@ -6,7 +6,8 @@
     <artifactId>remote-interceptor</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-
+    <name>remote-interceptor</name>
+    <description>远程请求自定义可扩展拦截器</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
