@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xiaobinger.tools.interceptor.config.HttpInterceptorRegistrar
