@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,7 +36,7 @@ public class RemoteHttpRequestInterceptor extends RemoteBaseHttpInterceptor impl
             URL url = new URL(httpRequest.getUrl());
             String path = Optional.ofNullable(url.getPath()).orElse("");
             String host = Optional.ofNullable(url.getHost()).orElse("");
-            String body = new String(httpRequest.bodyBytes(), StandardCharsets.UTF_8);
+            String body = Objects.nonNull(httpRequest.bodyBytes()) ? new String(httpRequest.bodyBytes(), StandardCharsets.UTF_8) : "";
             if (!CommonUtils.isNotBlank(host) || host.contains("oapi.dingtalk.com")) {
                 return;
             }
