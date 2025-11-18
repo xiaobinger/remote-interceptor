@@ -4,7 +4,7 @@
 
     <groupId>com.xiaobinger.tools</groupId>
     <artifactId>remote-interceptor</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
     <name>remote-interceptor</name>
     <description>远程请求自定义可扩展拦截器</description>

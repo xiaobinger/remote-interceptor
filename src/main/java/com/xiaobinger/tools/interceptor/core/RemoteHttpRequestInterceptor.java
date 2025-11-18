@@ -51,7 +51,7 @@ public class RemoteHttpRequestInterceptor extends RemoteBaseHttpInterceptor impl
             List<String> errorMatches = remoteHttpInterceptorConfig.getErrorMatches();
             boolean notifyFlag = CommonUtils.containsAny(body,errorMatches.toArray(new String[0]));
             if (notifyFlag){
-                triggerNotify(host, path, body, channelConfigItem,
+                triggerNotify(url, body, channelConfigItem,
                         remoteHttpInterceptorConfig.getNotifyConfig());
             }
         } catch (Exception e) {

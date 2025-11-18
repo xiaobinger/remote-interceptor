@@ -9,6 +9,7 @@ import com.xiaobinger.tools.interceptor.properties.RemoteHttpInterceptorConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -32,8 +33,9 @@ public class RemoteHttpResponseInterceptor extends RemoteBaseHttpInterceptor imp
             }
             // 处理响应
             HttpConnection httpConnection = (HttpConnection)BeanUtil.getFieldValue(httpResponse, "httpConnection");
-            String path = httpConnection.getUrl().getPath();
-            String host = httpConnection.getUrl().getHost();
+            URL urlInfo = httpConnection.getUrl();
+            String path = urlInfo.getPath();
+            String host = urlInfo.getHost();
             String body = httpResponse.body();
             if (!CommonUtils.isNotBlank(host) || host.contains("oapi.dingtalk.com")) {
                 return;
@@ -49,7 +51,7 @@ public class RemoteHttpResponseInterceptor extends RemoteBaseHttpInterceptor imp
             List<String> errorMatches = remoteHttpInterceptorConfig.getErrorMatches();
             boolean notifyFlag = CommonUtils.containsAny(body,errorMatches.toArray(new String[0]));
             if (!httpResponse.isOk() || notifyFlag){
-                triggerNotify(host, path, body, channelConfigItem,
+                triggerNotify(urlInfo, body, channelConfigItem,
                         remoteHttpInterceptorConfig.getNotifyConfig());
             }
         } catch (Exception e) {

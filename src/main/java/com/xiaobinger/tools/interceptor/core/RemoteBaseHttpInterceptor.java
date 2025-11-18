@@ -6,6 +6,7 @@ import com.xiaobinger.tools.interceptor.properties.NotifyConfig;
 import com.xiaobinger.tools.interceptor.utils.DingDingMessageSendUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +25,21 @@ public class RemoteBaseHttpInterceptor {
         return body;
     }
 
-    protected static void triggerNotify(String host, String path, String body,
+    protected static void triggerNotify(URL urlInfo, String body,
                                         ChannelConfigItem channelConfigItem,
                                         NotifyConfig notifyConfig) {
         if (notifyConfig == null) {
             return;
         }
-        log.info("远程调用地址：{}{}", host, path);
+        String host = urlInfo.getHost();
+        String path = urlInfo.getPath();
+        int port = urlInfo.getPort();
+        String baseAddress = urlInfo.getProtocol() + "://" + host + (port == -1 ? "" : ":" + port);
+        log.info("远程调用地址：{}{}", baseAddress, path);
         log.info("远程调用结果：{}", body);
         List<String> contents = new ArrayList<>();
         contents.add(channelConfigItem.getChannelName());
-        contents.add(host);
+        contents.add(baseAddress);
         contents.add(path);
         contents.add(body);
         DingDingMessageSendUtils.send(notifyConfig,contents);
